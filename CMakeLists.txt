@@ -35,15 +35,36 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD_REQUIRED ON
 )
 
-set(INCLUDE_INTERNAL "include")
-set(INCLUDE_EXTERNAL "/usr/include")
+set(INCLUDE_FOLDER "include")
+set(DPP_FOLDER "include/dpp")
+
+set(LIBRARY_FOLDER "lib")
 
 target_include_directories(${PROJECT_NAME} PRIVATE 
-    ${INCLUDE_INTERNAL} 
-    ${INCLUDE_EXTERNAL}
+    ${INCLUDE_FOLDER} 
+    ${DPP_FOLDER} 
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE "/lib/libdpp.so")
+if(WIN32)
+    target_include_directories(${PROJECT_NAME} PRIVATE ${LIBRARY_FOLDER})
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib/dpp.lib)
+    target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_BINARY_DIR}/harshie.rc")
+
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/bin $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    )
+
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/resources/harshie.rc.in 
+        ${CMAKE_BINARY_DIR}/harshie.rc 
+        @ONLY
+    )
+
+else()
+    target_link_libraries(${PROJECT_NAME} PRIVATE "/lib/libdpp.so")
+
+endif()
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
     COMMAND ${CMAKE_COMMAND} -E copy
