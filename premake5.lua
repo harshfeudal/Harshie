@@ -52,3 +52,4 @@ project "Harshie"
 	filter "configurations:Release"
 		runtime  "Release"
 		optimize "on"
+		
