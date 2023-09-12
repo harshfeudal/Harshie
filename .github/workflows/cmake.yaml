@@ -14,7 +14,7 @@ jobs:
         run: |
           sudo apt-get update -qy
           sudo apt-get install -y build-essential cmake
-          sudo apt-get install -y wget
+          sudo apt-get install -y wget libopus0
           wget -O dpp.deb https://dl.dpp.dev/
           sudo dpkg -i dpp.deb
 
