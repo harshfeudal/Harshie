@@ -18,6 +18,12 @@ jobs:
           wget -O dpp.deb https://dl.dpp.dev/
           sudo dpkg -i dpp.deb
 
+      - name: Create .env
+        env:
+          ENCODED_CLIENT_TOKEN: ${{ secret.ENCODED_CLIENT_TOKEN }}
+        run: |
+          echo "ENCODED_CLIENT_TOKEN=$ENCODED_CLIENT_TOKEN" > .env
+
       - name: Build Test
         run: |
           mkdir build
