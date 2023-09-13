@@ -10,8 +10,6 @@ cd build
 
 # Run CMake to generate build files
 cmake ..
-
-# Compile with 8 parallel jobs
 make -j8
 
 # Check if the compilation was successful, then run

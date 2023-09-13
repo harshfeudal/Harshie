@@ -1,4 +1,4 @@
-name: Harshie CMake Build
+name: Harshie CI Build Test
 
 on: [ push, pull_request ]
 
