@@ -64,7 +64,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 if(WIN32)
     target_include_directories(${PROJECT_NAME} PRIVATE ${LIBRARY_FOLDER})
+
     target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib/dpp.lib)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib/libpq.lib)
+
     target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_BINARY_DIR}/harshie.rc")
 
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

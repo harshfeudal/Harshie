@@ -35,7 +35,7 @@ project "Harshie"
 
 	includedirs{ "include" }
 	libdirs    { "lib" }
-	links      { "dpp.lib" }
+	links      { "dpp.lib", "libpq.lib" }
 	files      { 
 		"src/**.cpp", 
 		"src/commands/slash/**.h",
