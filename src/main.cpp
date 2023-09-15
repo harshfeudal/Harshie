@@ -15,14 +15,6 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 
-#pragma warning(disable: 4251)
-#pragma warning(disable: 6385)
-#pragma warning(disable: 6285)
-#pragma warning(disable: 4700)
-
-#include <dpp/dpp.h>
-#include <spdlog/spdlog.h>
-
 #include "cores/harshie.h"
 
 int main() 

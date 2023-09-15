@@ -3,9 +3,9 @@ setlocal
 
 set "open_sln=false"
 
-rem Check for command-line arguments: `--open:true` to open Visual Studio directly
+rem Check for command-line arguments: `--open` or `-o` to open Visual Studio directly
 for %%i in (%*) do (
-    if /I "%%i"=="--open:true" (
+    if /I "%%i"=="--open" (
         set "open_sln=true"
     )
 )
