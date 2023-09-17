@@ -55,7 +55,7 @@ jobs:
           cmake -G "Visual Studio 17 2022" -A x64 ..
           cmake --build . --config Release
           
-  premake-windows-build:
+  windows-premake-build:
     runs-on: windows-latest
 
     steps:
@@ -70,7 +70,14 @@ jobs:
         with:
           version: "5.0.0-beta2"
 
+      - name: Create .env
+        env:
+          ENCODED_CLIENT_TOKEN: ${{ secrets.ENCODED_CLIENT_TOKEN }}
+        run: |
+          echo "ENCODED_CLIENT_TOKEN=$ENCODED_CLIENT_TOKEN" > .env
+
       - name: Harshie Build Test
         run: |
           premake5 vs2022
           msbuild /m "Harshie.sln" /p:configuration="release"
+          

@@ -26,6 +26,16 @@ function copyFiles(source, destination)
     end
 end
 
+-- Copy the .env file from the root directory to x64/Release
+local envFile = ".env"
+if os.isfile(envFile) then
+    local destEnvFile = path.join(destinationDir, envFile)
+    os.copyfile(envFile, destEnvFile)
+    print(".env file copied to x64/Release.")
+else
+    print(".env file not found in the root directory.")
+end
+
 if not os.isdir(destinationDir) then
     os.mkdir(destinationDir)
 end
