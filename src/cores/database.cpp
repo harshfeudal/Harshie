@@ -18,15 +18,24 @@
 #include <stdexcept>
 #include <cstdlib>
 
+#include <spdlog/spdlog.h>
+#include <dpp/dpp.h>
+
 #include "database.h"
 
 HarshieDatabase::HarshieDatabase(const std::string& connectionString)
 {
     connection = PQconnectdb(connectionString.c_str());
+
     if (PQstatus(connection) != CONNECTION_OK)
     {
+        const auto errorLog = fmt::format("[{}]: Failed to connect to the database!", dpp::utility::current_date_time());
+        fmt::print(errorLog);
+
         throw std::runtime_error("Connection to the database failed: " + std::string(PQerrorMessage(connection)));
     }
+    else
+        fmt::print("[{}]: Connected to database!", dpp::utility::current_date_time());
 }
 
 HarshieDatabase::~HarshieDatabase()

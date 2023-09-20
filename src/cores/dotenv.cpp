@@ -20,88 +20,35 @@
 void HarshieDotenv::load(const std::string& filename) 
 {
     std::ifstream file(filename);
-
-    if (!file.is_open())
-        throw std::runtime_error("Failed to open .env file");
+	if (!file.is_open()) {
+		std::cerr << "Failed to open file: " << filename << std::endl;
+		return;
+	}
 
     std::string line;
-    while (std::getline(file, line)) 
-    {
-        if (isComment(line))
-            continue;
+    while (std::getline(file, line)) {
+    	if (line.empty() || line[0] == '#')
+    		continue;
 
-        expandVariables(line);
-        parseLine(line);
-    }
+		size_t pos = line.find('=');
+		if (pos == std::string::npos)
+			continue;
 
-    file.close();
-}
+		std::string key = line.substr(0, pos);
+		std::string value = line.substr(pos + 1);
 
-bool HarshieDotenv::has(const std::string& key) const 
-{
-    return variables_.find(key) != variables_.end();
+		if (!value.empty() && value[0] == '"' && value[value.size() - 1] == '"')
+			value = value.substr(1, value.size() - 2);
+
+		m_data[key] = value;
+	}
 }
 
 std::string HarshieDotenv::get(const std::string& key) const 
 {
-    if (!has(key))
-        throw std::runtime_error("Undefined key: " + key);
-
-    return variables_.at(key);
-}
-
-bool HarshieDotenv::isComment(const std::string& line) 
-{
-    return line.find("#") == 0;
-}
-
-void HarshieDotenv::expandVariables(std::string& line) 
-{
-    std::size_t pos = 0;
-
-    while ((pos = line.find('$', pos)) != std::string::npos) 
-    {
-        if (pos + 1 < line.length()) 
-        {
-            if (line[pos + 1] == '\\') 
-            {
-                line.erase(pos, 1);
-                ++pos;
-            } 
-            else if (line[pos + 1] == '{') 
-            {
-                std::size_t endPos = line.find('}', pos + 2);
-
-                if (endPos != std::string::npos) 
-                {
-                    std::string varName = line.substr(pos + 2, endPos - pos - 2);
-                    std::string varValue = (has(varName)) ? get(varName) : "";
-
-                    line.replace(pos, endPos - pos + 1, varValue);
-                    pos += varValue.length();
-                } 
-                else
-                    ++pos;
-            } 
-            else 
-            {
-                std::string varName = line.substr(pos + 1);
-                std::string varValue = (has(varName)) ? get(varName) : "";
-
-                line.replace(pos, varName.length() + 1, varValue);
-                pos += varValue.length();
-            }
-        } 
-        else
-            break;
-    }
-}
-
-void HarshieDotenv::parseLine(const std::string& line) 
-{
-    std::istringstream iss(line);
-    std::string key, value;
-
-    if (std::getline(iss >> std::ws, key, '=') && std::getline(iss >> std::ws, value))
-        variables_[key] = value;
+    auto it = m_data.find(key);
+		if (it != m_data.end()) {
+			return it->second;
+		}
+		return "";
 }

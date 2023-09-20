@@ -21,9 +21,11 @@
 
 Harshie::Harshie()
 {
-    HarshieDotenv dotenv;
     dotenv.load(".env");
+}
 
+void Harshie::HarshieStart()
+{
     const auto encodedToken = dotenv.get("ENCODED_CLIENT_TOKEN");
     const auto token = HarshieDecoder::Decode(encodedToken);
 
@@ -32,10 +34,8 @@ Harshie::Harshie()
 
     HarshieOnReady();
     HarshieOnSlashCmnd();
-}
-
-void Harshie::HarshieStart()
-{
+    HarshieOnDatabaseConnect();
+    
     client->start(dpp::st_wait);
 }
 
@@ -84,4 +84,21 @@ void Harshie::HarshieOnSlashCmnd()
 			if (iterator != commands.end())
 				iterator->second.function(*client, event);
         });
+}
+
+void Harshie::HarshieOnDatabaseConnect()
+{
+    const auto databaseName = dotenv.get("DBNAME");
+    const auto databaseHost = dotenv.get("DBHOST");
+    const auto databasePort = dotenv.get("DBPORT");
+    const auto databaseUser = dotenv.get("DBUSER");
+    const auto databasePass = dotenv.get("DBPASS");
+    const auto databaseAppName = dotenv.get("DBAPPNAME");
+
+    const auto databaseConnectStr = fmt::format(
+        "dbname={} host={} port={} user={} password={} application_name={}",
+        databaseName, databaseHost, databasePort, databaseUser, databasePass, databaseAppName
+    );
+
+    HarshieDatabase database(databaseConnectStr);
 }

@@ -27,13 +27,8 @@ class HarshieDotenv
 {
 public:
     void load(const std::string& filename);
-    bool has(const std::string& key) const;
     std::string get(const std::string& key) const;
 
 private:
-    std::unordered_map<std::string, std::string> variables_;
-
-    bool isComment(const std::string& line);
-    void expandVariables(std::string& line);
-    void parseLine(const std::string& line);
+    std::unordered_map<std::string, std::string> m_data;
 };

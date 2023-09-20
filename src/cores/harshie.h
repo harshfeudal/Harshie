@@ -29,6 +29,7 @@
 
 #include "dotenv.h"
 #include "decoder.h"
+#include "database.h"
 
 class Harshie {
 public:
@@ -37,10 +38,12 @@ public:
     void HarshieStart();
 
 private:
+    HarshieDotenv dotenv;
     std::unique_ptr<dpp::cluster> client;
 
     void HarshieOnReady();
     void HarshieOnSlashCmnd();
+    void HarshieOnDatabaseConnect();
 
     void HarshieActivites(const dpp::ready_t& event);
     void HarshieRegisterSlashCmnd();
