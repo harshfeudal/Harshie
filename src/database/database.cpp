@@ -23,19 +23,21 @@
 
 #include "database.h"
 
-HarshieDatabase::HarshieDatabase(const std::string& connectionString)
+HarshieDatabase::HarshieDatabase() { }
+
+void HarshieDatabase::connectDatabase(const std::string& connectionString)
 {
     connection = PQconnectdb(connectionString.c_str());
 
     if (PQstatus(connection) != CONNECTION_OK)
     {
-        const auto errorLog = fmt::format("[{}]: Failed to connect to the database!", dpp::utility::current_date_time());
+        const auto errorLog = fmt::format("[{}] Failed to connect to the database!\n", dpp::utility::current_date_time());
         fmt::print(errorLog);
 
         throw std::runtime_error("Connection to the database failed: " + std::string(PQerrorMessage(connection)));
     }
     else
-        fmt::print("[{}]: Connected to database!", dpp::utility::current_date_time());
+        fmt::print("[{}] Connected to database!\n", dpp::utility::current_date_time());
 }
 
 HarshieDatabase::~HarshieDatabase()
@@ -45,7 +47,7 @@ HarshieDatabase::~HarshieDatabase()
 
 bool HarshieDatabase::createTable(const std::string& tableName, const std::string& columns)
 {
-    std::string query = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + columns + ");";
+    std::string query = "CREATE TABLE IF NOT EXISTS \"" + tableName + "\" (" + columns + ");";
     PGresult* result = PQexec(connection, query.c_str());
     ExecStatusType status = PQresultStatus(result);
     PQclear(result);
@@ -73,22 +75,21 @@ bool HarshieDatabase::deleteData(const std::string& tableName, const std::string
     return status == PGRES_COMMAND_OK;
 }
 
-int HarshieDatabase::getCount(const std::string& tableName, const std::string& searchCondition)
+bool HarshieDatabase::findRecord(const std::string& tableName, const std::string& searchCondition)
 {
-    std::string query = "SELECT COUNT(*) FROM " + tableName + " WHERE " + searchCondition + ";";
+    std::string query = "SELECT * FROM " + tableName + " WHERE " + searchCondition + ";";
     PGresult* result = PQexec(connection, query.c_str());
 
-    if (PQresultStatus(result) == PGRES_TUPLES_OK)
+    if (PQresultStatus(result) != PGRES_TUPLES_OK) 
     {
-        int count = atoi(PQgetvalue(result, 0, 0));
+        std::cerr << "Query failed: " << PQerrorMessage(connection) << std::endl;
         PQclear(result);
-        return count;
+
+        PQfinish(connection);
+        return false;
     }
-    else
-    {
-        PQclear(result);
-        throw std::runtime_error("Error executing query: " + query);
-    }
+
+    return true;
 }
 
 std::string HarshieDatabase::selectData(const std::string& targetColumn, const std::string& tableName, const std::string& searchCondition)
@@ -107,4 +108,10 @@ std::string HarshieDatabase::selectData(const std::string& targetColumn, const s
         PQclear(result);
         throw std::runtime_error("Error executing query: " + query);
     }
+}
+
+HarshieDatabase& HarshieDatabase::getInstance()
+{
+    static HarshieDatabase instance;
+    return instance;
 }

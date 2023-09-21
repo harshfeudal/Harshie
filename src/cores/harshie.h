@@ -29,7 +29,7 @@
 
 #include "dotenv.h"
 #include "decoder.h"
-#include "database.h"
+#include "../database/database.h"
 
 class Harshie {
 public:
@@ -44,6 +44,7 @@ private:
     void HarshieOnReady();
     void HarshieOnSlashCmnd();
     void HarshieOnDatabaseConnect();
+    void HarshieOnDatabaseCreate();
 
     void HarshieActivites(const dpp::ready_t& event);
     void HarshieRegisterSlashCmnd();

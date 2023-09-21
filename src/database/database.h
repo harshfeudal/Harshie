@@ -24,14 +24,22 @@ class HarshieDatabase
 {
 private:
     PGconn* connection;
+    HarshieDatabase();
 
 public:
-    HarshieDatabase(const std::string& connectionString);
     ~HarshieDatabase();
+
+    void connectDatabase(const std::string& connectionString);
+    static HarshieDatabase& getInstance();
 
     bool createTable(const std::string& tableName, const std::string& columns);
     bool insertData(const std::string& tableName, const std::string& values);
     bool deleteData(const std::string& tableName, const std::string& condition);
-    int getCount(const std::string& tableName, const std::string& searchCondition);
+    bool findRecord(const std::string& tableName, const std::string& searchCondition);
     std::string selectData(const std::string& targetColumn, const std::string& tableName, const std::string& searchCondition);
+
+    HarshieDatabase(const HarshieDatabase&) = delete;
+    HarshieDatabase(HarshieDatabase&&) = delete;
+    HarshieDatabase& operator=(const HarshieDatabase&) = delete;
+    HarshieDatabase& operator=(HarshieDatabase&&) = delete;
 };

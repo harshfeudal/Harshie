@@ -20,5 +20,8 @@
 #include <dpp/dpp.h>
 #include <spdlog/spdlog.h>
 
+#include "../../database/database.h"
+
 // Common commands
 void ping(dpp::cluster& client, const dpp::slashcommand_t& event);
+void config_language(dpp::cluster& client, const dpp::slashcommand_t& event);

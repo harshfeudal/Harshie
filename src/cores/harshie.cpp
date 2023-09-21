@@ -34,7 +34,9 @@ void Harshie::HarshieStart()
 
     HarshieOnReady();
     HarshieOnSlashCmnd();
+    
     HarshieOnDatabaseConnect();
+    HarshieOnDatabaseCreate();
     
     client->start(dpp::st_wait);
 }
@@ -51,7 +53,7 @@ void Harshie::HarshieOnReady()
 void Harshie::HarshieActivites(const dpp::ready_t& event)
 {
     client->set_presence(dpp::presence(dpp::ps_dnd, dpp::at_game, "Looking for moderation"));
-    fmt::print("[{}]: {} is online!\n", dpp::utility::current_date_time(), client->me.format_username());
+    fmt::print("[{}] {} is online!\n", dpp::utility::current_date_time(), client->me.format_username());
 }
 
 void Harshie::HarshieRegisterSlashCmnd()
@@ -61,14 +63,14 @@ void Harshie::HarshieRegisterSlashCmnd()
         registerSlashCommand(*client);
 
         fmt::print(
-            "[{}]: Successfully registered application (/) commands!\n", 
+            "[{}] Successfully registered application (/) commands!\n", 
             dpp::utility::current_date_time()
         );  
     }
     catch (...) 
     { 
         fmt::print(
-            "[{}]: Fail to register application (/) commands!\n", 
+            "[{}] Fail to register application (/) commands!\n", 
             dpp::utility::current_date_time()
         );
     }
@@ -100,5 +102,11 @@ void Harshie::HarshieOnDatabaseConnect()
         databaseName, databaseHost, databasePort, databaseUser, databasePass, databaseAppName
     );
 
-    HarshieDatabase database(databaseConnectStr);
+    HarshieDatabase& database = HarshieDatabase::getInstance();
+    database.connectDatabase(databaseConnectStr);
+}
+
+void Harshie::HarshieOnDatabaseCreate()
+{
+    
 }

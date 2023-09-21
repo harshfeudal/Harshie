@@ -42,6 +42,8 @@ project "Harshie"
             "src/commands/slash/cmd_common/**.cpp",
         "src/cores/**.h",
         "src/cores/**.cpp",
+		"src/database/**.h",
+        "src/database/**.cpp",
 		"resources/*.h",
         "resources/*.rc",
 	}

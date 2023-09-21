@@ -33,4 +33,15 @@ inline std::map<std::string, HarshieCmndConstructor> commands
             "Check Harshie latency", ping 
         }
     },
+    {
+        "config-language",
+        {
+            "Language configuration", config_language,
+            {
+                dpp::command_option(dpp::co_string, "language", "Your prefer language", true)
+                    .add_choice(dpp::command_option_choice("English", std::string("english")))
+                    .add_choice(dpp::command_option_choice("日本語", std::string("japanese")))
+            }
+        }
+    }
 };

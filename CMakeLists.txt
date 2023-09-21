@@ -34,6 +34,7 @@ project(
 
 aux_source_directory(src MAINSRC)
 aux_source_directory(src/cores CORES)
+aux_source_directory(src/database DATABASE)
 
 aux_source_directory(src/commands COMMANDS)
 aux_source_directory(src/commands/slash/cmd_common COMMON_CMDS)
@@ -45,6 +46,7 @@ add_executable(${PROJECT_NAME}
         ${COMMON_CMDS} 
         ${MODERATION_CMDS} 
     ${CORES} 
+    ${DATABASE} 
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
