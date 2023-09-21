@@ -84,9 +84,9 @@ if(WIN32)
     )
 
 else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE "/lib/libdpp.so")
-
     find_package(PostgreSQL REQUIRED)
+    
+    target_link_libraries(${PROJECT_NAME} PRIVATE "/lib/libdpp.so")
     target_link_libraries(${PROJECT_NAME} PRIVATE PostgreSQL::PostgreSQL)
 
 endif()

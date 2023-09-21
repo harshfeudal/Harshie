@@ -29,4 +29,5 @@ public:
 
 private:
     HarshieDatabase& database = HarshieDatabase::getInstance();
+    
 };

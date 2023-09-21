@@ -26,7 +26,7 @@ function copyFiles(source, destination)
     end
 end
 
--- Copy the .env file from the root directory to x64/Release
+-- Copy the .env
 local envFile = ".env"
 if os.isfile(envFile) then
     local destEnvFile = path.join(destinationDir, envFile)
@@ -36,7 +36,7 @@ else
     print(".env file not found in the root directory.")
 end
 
--- Copy the languages.json file from the root directory to x64/Release
+-- Copy the languages.json
 local langFile = "languages.json"
 if os.isfile(langFile) then
     local destLangFile = path.join(destinationDir, langFile)

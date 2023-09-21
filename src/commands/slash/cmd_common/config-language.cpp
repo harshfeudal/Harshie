@@ -53,6 +53,7 @@ void config_language(dpp::cluster& client, const dpp::slashcommand_t& event)
     openLanguagesFile >> languagesJSON;
 
     auto embedDescription = languagesJSON["CONFIG_LANGUAGE"][setLanguage];
+    
     auto create_embed = dpp::embed()
 	    .set_title(embedDescription["title"])
 	    .set_color(0x38ff9b)
