@@ -33,7 +33,7 @@ project "Harshie"
 	targetdir ("%{wks.location}/x64/%{cfg.buildcfg}")
 	objdir    ("%{wks.location}/x64/%{cfg.buildcfg}")
 
-	includedirs{ "include" }
+	includedirs{ "include", "include/dpp" }
 	libdirs    { "lib" }
 	links      { "dpp.lib", "libpq.lib" }
 	files      { 
