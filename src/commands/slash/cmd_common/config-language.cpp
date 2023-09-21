@@ -15,7 +15,13 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 
+#include <fstream>
+
+#include <nlohmann/json.hpp>
+
 #include "../cmd_lists.h"
+
+using json = nlohmann::json;
 
 void config_language(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
@@ -40,4 +46,18 @@ void config_language(dpp::cluster& client, const dpp::slashcommand_t& event)
         setLanguage = "ja-jp";
         database.insertData("language_config", searchUser + ", '" + setLanguage + "'");
     }
+
+    json languagesJSON;
+
+    std::ifstream openLanguagesFile("languages.json");
+    openLanguagesFile >> languagesJSON;
+
+    auto embedDescription = languagesJSON["CONFIG_LANGUAGE"][setLanguage];
+    auto create_embed = dpp::embed()
+	    .set_title(embedDescription["title"])
+	    .set_color(0x38ff9b)
+	    .set_description(embedDescription["description"])
+	    .set_timestamp(time(0));
+
+    event.reply(dpp::message().add_embed(create_embed).set_flags(dpp::m_ephemeral));
 }

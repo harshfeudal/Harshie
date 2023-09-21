@@ -1,0 +1,15 @@
+{
+    "CONFIG_LANGUAGE":
+    {
+        "en-us": 
+        {
+            "title": "Success!",
+            "description": "Language has been set to `English - United State`"
+        },
+        "ja-jp":
+        {
+            "title": "成功!",
+            "description": "言語は `日本語` に設定されています"
+        }
+    }
+}

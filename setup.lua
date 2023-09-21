@@ -36,6 +36,16 @@ else
     print(".env file not found in the root directory.")
 end
 
+-- Copy the languages.json file from the root directory to x64/Release
+local langFile = "languages.json"
+if os.isfile(langFile) then
+    local destLangFile = path.join(destinationDir, langFile)
+    os.copyfile(langFile, destLangFile)
+    print("languages.json file copied to x64/Release.")
+else
+    print("languages.json file not found in the root directory.")
+end
+
 if not os.isdir(destinationDir) then
     os.mkdir(destinationDir)
 end
