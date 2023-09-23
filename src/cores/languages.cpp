@@ -15,18 +15,23 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 
-#pragma once
+#include <fstream>
 
-#include <dpp/dpp.h>
-#include <spdlog/spdlog.h>
+#include "languages.h"
 
-#include "database.h"
-
-class HarshieCreateDatabase
+HarshieLanguages::HarshieLanguages() 
 {
-public:
-    void languageData();
+    std::ifstream openLanguagesFile("languages.json");
+    openLanguagesFile >> languagesJSON;
+}
 
-private:
-    HarshieDatabase& database = HarshieDatabase::getInstance();
-};
+HarshieLanguages& HarshieLanguages::getInstance() 
+{
+    static HarshieLanguages instance;
+    return instance;
+}
+
+json& HarshieLanguages::getLanguagesJSON() 
+{
+    return languagesJSON;
+}

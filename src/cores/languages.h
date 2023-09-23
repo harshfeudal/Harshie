@@ -17,16 +17,17 @@
 
 #pragma once
 
-#include <dpp/dpp.h>
-#include <spdlog/spdlog.h>
+#include <nlohmann/json.hpp>
 
-#include "database.h"
+using json = nlohmann::json;
 
-class HarshieCreateDatabase
+class HarshieLanguages 
 {
 public:
-    void languageData();
+    static HarshieLanguages& getInstance();
+    json& getLanguagesJSON();
 
 private:
-    HarshieDatabase& database = HarshieDatabase::getInstance();
+    HarshieLanguages();
+    json languagesJSON;
 };

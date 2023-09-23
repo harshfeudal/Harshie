@@ -11,5 +11,13 @@
             "title": "成功!",
             "description": "言語は `日本語` に設定されています"
         }
+    },
+    "PING":
+    {
+        "en-us": 
+        {
+            "title": "",
+            "description": ""
+        }
     }
 }

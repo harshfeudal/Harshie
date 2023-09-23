@@ -17,10 +17,14 @@
 
 #pragma once
 
+#include <fstream>
+
 #include <dpp/dpp.h>
 #include <spdlog/spdlog.h>
+#include <nlohmann/json.hpp>
 
 #include "../../database/database.h"
+#include "../../cores/languages.h"
 
 // Common commands
 void ping(dpp::cluster& client, const dpp::slashcommand_t& event);
