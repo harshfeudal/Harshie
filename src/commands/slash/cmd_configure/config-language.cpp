@@ -17,39 +17,37 @@
 
 #include "../cmd_lists.h"
 
-using json = nlohmann::json;
-
 void config_language(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
     const auto selectLanguage = std::get<std::string>(event.get_parameter("language"));
     HarshieDatabase& database = HarshieDatabase::getInstance();
 
-    auto recordUser = fmt::format("'{}'", event.command.usr.id);
-    auto searchUser = database.findRecord("language_config", "id=" + recordUser);
+    auto recordUserID = fmt::format("'{}'", event.command.usr.id);
+    auto searchUser = database.findRecord("language_config", "id=" + recordUserID);
 
     std::string setLanguage = "en-us";
 
     if (selectLanguage == "english")
     {
         if (searchUser)
-            database.deleteData("language_config", "id=" + searchUser);
+            database.deleteData("language_config", "id=" + recordUserID);
     }
     else if (selectLanguage == "japanese")
     {
         if (searchUser)
-            database.deleteData("language_config", "id=" + searchUser);
+            database.deleteData("language_config", "id=" + recordUserID);
 
         setLanguage = "ja-jp";
-        database.insertData("language_config", searchUser + ", '" + setLanguage + "'");
+        database.insertData("language_config", recordUserID + ", '" + setLanguage + "'");
     }
 
     json& languagesJSON = HarshieLanguages::getInstance().getLanguagesJSON();
-    auto embedDescription = languagesJSON["CONFIG_LANGUAGE"][setLanguage];
+    auto findDetails = languagesJSON["CONFIG_LANGUAGE"][setLanguage];
     
     auto create_embed = dpp::embed()
-	    .set_title(embedDescription["title"])
+	    .set_title(findDetails["title"])
 	    .set_color(0xabf2d3)
-	    .set_description(embedDescription["description"])
+	    .set_description(findDetails["description"])
 	    .set_timestamp(time(0));
 
     event.reply(

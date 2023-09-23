@@ -29,5 +29,3 @@ void HarshieCreateDatabase::languageData()
         fmt::print("[{}] Failed to create language_config table\n", dpp::utility::current_date_time());
     }
 }
-
-// To be continue ...

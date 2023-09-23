@@ -19,12 +19,35 @@
 
 void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
-    const auto ws_ping = fmt::format("`{0:.02f} ms`", event.from->websocket_ping * 1000);
-    const auto rest_ping = fmt::format("`{0:.02f} ms`", event.from->creator->rest_ping * 1000);
+    const auto wsPing = fmt::format("`{0:.02f} ms`", event.from->websocket_ping * 1000);
+    const auto restPing = fmt::format("`{0:.02f} ms`", event.from->creator->rest_ping * 1000);
 
-    const std::string message = fmt::format("WebSocket ping: {}\nBot latency: {}", ws_ping, rest_ping);
+    HarshieDatabase& database = HarshieDatabase::getInstance();
+
+    auto recordUserID = fmt::format("'{}'", event.command.usr.id);
+    auto searchUser = database.findRecord("language_config", "id=" + recordUserID);
+
+    std::string selectLanguage = "en-us";
+    if (searchUser)
+        selectLanguage = database.exportData("language", "language_config", "id=" + recordUserID);
+
+    json& languagesJSON = HarshieLanguages::getInstance().getLanguagesJSON();
+    auto findDetails = languagesJSON["PING"][selectLanguage];
+
+    auto create_embed = dpp::embed()
+        .set_title(findDetails["title"])
+        .set_color(0xabf2d3)
+        .add_field(findDetails["websocket"], wsPing, true)
+        .add_field(findDetails["roundtrip"], restPing, true)
+        .set_thumbnail(client.me.get_avatar_url(1024, dpp::i_webp))
+        .set_footer(
+            dpp::embed_footer()
+            .set_text(client.me.format_username())
+            .set_icon(client.me.get_avatar_url())
+        )
+        .set_timestamp(time(0));
 
     event.reply(
-        dpp::message(message).set_flags(dpp::m_ephemeral)
+        dpp::message().add_embed(create_embed)
     );
 }

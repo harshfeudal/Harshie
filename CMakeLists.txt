@@ -39,12 +39,14 @@ aux_source_directory(src/database DATABASE)
 aux_source_directory(src/commands COMMANDS)
 aux_source_directory(src/commands/slash/cmd_common COMMON_CMDS)
 aux_source_directory(src/commands/slash/cmd_moderation MODERATION_CMDS)
+aux_source_directory(src/commands/slash/cmd_configure CONFIG_CMDS)
 
 add_executable(${PROJECT_NAME} 
     ${MAINSRC} 
     ${COMMANDS} 
         ${COMMON_CMDS} 
         ${MODERATION_CMDS} 
+        ${CONFIG_CMDS} 
     ${CORES} 
     ${DATABASE} 
 )

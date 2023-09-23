@@ -47,32 +47,47 @@ HarshieDatabase::~HarshieDatabase()
 
 bool HarshieDatabase::createTable(const std::string& tableName, const std::string& columns)
 {
-    std::string query = "CREATE TABLE IF NOT EXISTS \"" + tableName + "\" (" + columns + ");";
+    std::string query = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + columns + ");";
     PGresult* result = PQexec(connection, query.c_str());
-    ExecStatusType status = PQresultStatus(result);
-    PQclear(result);
 
-    return status == PGRES_COMMAND_OK;
+    if (PQresultStatus(result) != PGRES_COMMAND_OK)
+    {
+        PQclear(result);
+        return false;
+    }
+
+    PQclear(result);
+    return true;
 }
 
 bool HarshieDatabase::insertData(const std::string& tableName, const std::string& values)
 {
     std::string query = "INSERT INTO " + tableName + " VALUES (" + values + ");";
     PGresult* result = PQexec(connection, query.c_str());
-    ExecStatusType status = PQresultStatus(result);
-    PQclear(result);
 
-    return status == PGRES_COMMAND_OK;
+    if (PQresultStatus(result) != PGRES_COMMAND_OK)
+    {
+        PQclear(result);
+        return false;
+    }
+
+    PQclear(result);
+    return true;
 }
 
 bool HarshieDatabase::deleteData(const std::string& tableName, const std::string& condition)
 {
     std::string query = "DELETE FROM " + tableName + " WHERE " + condition + ";";
     PGresult* result = PQexec(connection, query.c_str());
-    ExecStatusType status = PQresultStatus(result);
-    PQclear(result);
 
-    return status == PGRES_COMMAND_OK;
+    if (PQresultStatus(result) != PGRES_COMMAND_OK)
+    {
+        PQclear(result);
+        return false;
+    }
+
+    PQclear(result);
+    return true;
 }
 
 bool HarshieDatabase::findRecord(const std::string& tableName, const std::string& searchCondition)
@@ -80,19 +95,22 @@ bool HarshieDatabase::findRecord(const std::string& tableName, const std::string
     std::string query = "SELECT * FROM " + tableName + " WHERE " + searchCondition + ";";
     PGresult* result = PQexec(connection, query.c_str());
 
-    if (PQresultStatus(result) != PGRES_TUPLES_OK) 
+    if (PQresultStatus(result) != PGRES_TUPLES_OK)
     {
-        std::cerr << "Query failed: " << PQerrorMessage(connection) << std::endl;
         PQclear(result);
-
-        PQfinish(connection);
         return false;
     }
 
-    return true;
+    int numRows = PQntuples(result);
+    PQclear(result);
+
+    if (numRows > 0) 
+        return true;
+    else
+        return false;
 }
 
-std::string HarshieDatabase::selectData(const std::string& targetColumn, const std::string& tableName, const std::string& searchCondition)
+std::string HarshieDatabase::exportData(const std::string& targetColumn, const std::string& tableName, const std::string& searchCondition)
 {
     std::string query = "SELECT " + targetColumn + " FROM " + tableName + " WHERE " + searchCondition + ";";
     PGresult* result = PQexec(connection, query.c_str());

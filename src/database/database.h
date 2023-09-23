@@ -36,7 +36,7 @@ public:
     bool insertData(const std::string& tableName, const std::string& values);
     bool deleteData(const std::string& tableName, const std::string& condition);
     bool findRecord(const std::string& tableName, const std::string& searchCondition);
-    std::string selectData(const std::string& targetColumn, const std::string& tableName, const std::string& searchCondition);
+    std::string exportData(const std::string& targetColumn, const std::string& tableName, const std::string& searchCondition);
 
     HarshieDatabase(const HarshieDatabase&) = delete;
     HarshieDatabase(HarshieDatabase&&) = delete;

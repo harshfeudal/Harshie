@@ -18,6 +18,7 @@
 #include "harshie.h"
 
 #include "../commands/slash/cmd_register.h"
+#include "../database/db_create.h"
 
 Harshie::Harshie()
 {
@@ -108,5 +109,6 @@ void Harshie::HarshieOnDatabaseConnect()
 
 void Harshie::HarshieOnDatabaseCreate()
 {
-    
+    HarshieCreateDatabase createDatabase;
+    createDatabase.languageData();
 }

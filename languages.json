@@ -16,8 +16,15 @@
     {
         "en-us": 
         {
-            "title": "",
-            "description": ""
+            "title": "Latency result",
+            "websocket": "Average Websocket Ping",
+            "roundtrip": "Roundtrip latency"
+        },
+        "ja-jp": 
+        {
+            "title": "レイテンシの結果",
+            "websocket": "平均 Websocket Ping",
+            "roundtrip": "往復遅延"
         }
     }
 }
