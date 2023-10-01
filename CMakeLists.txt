@@ -20,7 +20,7 @@ cmake_minimum_required(VERSION 3.15)
 set(PROJECT_NAME "Harshie")
 
 set(HARSHIE_VERSION_MAJOR 1)
-set(HARSHIE_VERSION_MINOR 0)
+set(HARSHIE_VERSION_MINOR 1)
 set(HARSHIE_VERSION_PATCH 0)
 set(HARSHIE_VERSION_BUILD 0)
 set(HARSHIE_VERSION ${HARSHIE_VERSION_MAJOR}.${HARSHIE_VERSION_MINOR}.${HARSHIE_VERSION_PATCH}.${HARSHIE_VERSION_BUILD})
@@ -40,6 +40,7 @@ aux_source_directory(src/commands COMMANDS)
 aux_source_directory(src/commands/slash/cmd_common COMMON_CMDS)
 aux_source_directory(src/commands/slash/cmd_moderation MODERATION_CMDS)
 aux_source_directory(src/commands/slash/cmd_configure CONFIG_CMDS)
+aux_source_directory(src/commands/slash/cmd_utils UTILS_CMDS)
 
 add_executable(${PROJECT_NAME} 
     ${MAINSRC} 
@@ -47,6 +48,7 @@ add_executable(${PROJECT_NAME}
         ${COMMON_CMDS} 
         ${MODERATION_CMDS} 
         ${CONFIG_CMDS} 
+        ${UTILS_CMDS} 
     ${CORES} 
     ${DATABASE} 
 )

@@ -28,4 +28,9 @@
 
 // Common commands
 void ping(dpp::cluster& client, const dpp::slashcommand_t& event);
+
+// Configure commands
 void config_language(dpp::cluster& client, const dpp::slashcommand_t& event);
+
+// Moderation commands
+void ban(dpp::cluster& client, const dpp::slashcommand_t& event);

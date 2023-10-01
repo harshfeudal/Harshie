@@ -15,38 +15,4 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 
-#pragma warning(push)
-
-#pragma warning(disable: 4251)
-#pragma warning(disable: 6385)
-#pragma warning(disable: 6285)
-#pragma warning(disable: 4700)
-
-#include <dpp/dpp.h>
-#include <spdlog/spdlog.h>
-
-#pragma warning(pop)
-
-#include "dotenv.h"
-#include "decoder.h"
-#include "../database/database.h"
-
-class Harshie 
-{
-public:
-    Harshie();
-
-    void HarshieStart();
-
-private:
-    HarshieDotenv dotenv;
-    std::unique_ptr<dpp::cluster> client;
-
-    void HarshieOnReady();
-    void HarshieOnSlashCmnd();
-    void HarshieOnDatabaseConnect();
-    void HarshieOnDatabaseCreate();
-
-    void HarshieActivites(const dpp::ready_t& event);
-    void HarshieRegisterSlashCmnd();
-};
+// This file will be soon constructed!

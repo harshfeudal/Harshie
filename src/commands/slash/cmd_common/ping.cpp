@@ -23,13 +23,7 @@ void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
     const auto restPing = fmt::format("`{0:.02f} ms`", event.from->creator->rest_ping * 1000);
 
     HarshieDatabase& database = HarshieDatabase::getInstance();
-
-    auto recordUserID = fmt::format("'{}'", event.command.usr.id);
-    auto searchUser = database.findRecord("language_config", "id=" + recordUserID);
-
-    std::string selectLanguage = "en-us";
-    if (searchUser)
-        selectLanguage = database.exportData("language", "language_config", "id=" + recordUserID);
+    std::string selectLanguage = database.getSelectLanguage(event.command.usr.id);
 
     json& languagesJSON = HarshieLanguages::getInstance().getLanguagesJSON();
     auto findDetails = languagesJSON["PING"][selectLanguage];
@@ -37,8 +31,8 @@ void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
     auto create_embed = dpp::embed()
         .set_title(findDetails["title"])
         .set_color(0xabf2d3)
-        .add_field(findDetails["websocket"], wsPing, true)
-        .add_field(findDetails["roundtrip"], restPing, true)
+        .add_field(findDetails["websocket"], wsPing, false)
+        .add_field(findDetails["roundtrip"], restPing, false)
         .set_thumbnail(client.me.get_avatar_url(1024, dpp::i_webp))
         .set_footer(
             dpp::embed_footer()

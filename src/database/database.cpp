@@ -133,3 +133,15 @@ HarshieDatabase& HarshieDatabase::getInstance()
     static HarshieDatabase instance;
     return instance;
 }
+
+std::string HarshieDatabase::getSelectLanguage(const dpp::snowflake& userId)
+{
+    auto recordUserID = fmt::format("'{}'", userId);
+        auto searchUser = findRecord("language_config", "id=" + recordUserID);
+
+        std::string selectLanguage = "en-us";
+        if (searchUser)
+            selectLanguage = exportData("language", "language_config", "id=" + recordUserID);
+
+        return selectLanguage;
+}

@@ -33,14 +33,28 @@ inline std::map<std::string, HarshieCmndConstructor> commands
             "Check Harshie latency", ping 
         }
     },
+
+    // Configure commands
     {
         "config-language",
         {
-            "Language configuration", config_language,
+            "Set your prefer language when interacting with the bot", config_language,
             {
                 dpp::command_option(dpp::co_string, "language", "Your prefer language", true)
                     .add_choice(dpp::command_option_choice("English", std::string("english")))
                     .add_choice(dpp::command_option_choice("日本語", std::string("japanese")))
+            }
+        }
+    },
+
+    // Moderation commands
+    {
+        "ban",
+        {
+            "Ban a target user", ban,
+            {
+                dpp::command_option(dpp::co_user, "user", "Target a user", true),
+                dpp::command_option(dpp::co_string, "reason", "Reason to relate the ban", false)
             }
         }
     }

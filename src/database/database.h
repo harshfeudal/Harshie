@@ -17,8 +17,10 @@
 
 #pragma once
 
-#include <postgresql/libpq-fe.h>
 #include <string>
+
+#include <postgresql/libpq-fe.h>
+#include <dpp/dpp.h>
 
 class HarshieDatabase
 {
@@ -42,4 +44,6 @@ public:
     HarshieDatabase(HarshieDatabase&&) = delete;
     HarshieDatabase& operator=(const HarshieDatabase&) = delete;
     HarshieDatabase& operator=(HarshieDatabase&&) = delete;
+
+    std::string getSelectLanguage(const dpp::snowflake& userId);
 };

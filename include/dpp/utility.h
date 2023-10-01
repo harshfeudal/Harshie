@@ -90,6 +90,28 @@ namespace dpp {
 		std::string DPP_EXPORT cdn_endpoint_url_sticker(snowflake sticker_id, sticker_format format);
 
 		/**
+		 * @brief Supported AVX instruction set type for audio mixing
+		 */
+		enum avx_type_t : uint8_t {
+			/**
+			 * @brief No AVX Support
+			 */
+			avx_none,
+			/**
+			 * @brief AVX support
+			 */
+			avx_1,
+			/**
+			 * @brief AVX2 support
+			 */
+			avx_2,
+			/**
+			 * @brief AVX512 support
+			 */
+			avx_512,
+		};
+
+		/**
 		 * @brief Timestamp formats for dpp::utility::timestamp()
 		 * 
 		 * @note These values are the actual character values specified by the Discord API
@@ -129,6 +151,11 @@ namespace dpp {
 		 * @brief The base URL for CDN content such as profile pictures and guild icons.
 		 */
 		inline const std::string cdn_host = "https://cdn.discordapp.com"; 
+
+		/**
+		 * @brief The base URL for message/user/channel links.
+		 */
+		inline const std::string url_host = "https://discord.com"; 
 
 		/**
 		 * @brief Callback for the results of a command executed via dpp::utility::exec
@@ -277,6 +304,14 @@ namespace dpp {
 		bool DPP_EXPORT has_voice();
 
 		/**
+		 * @brief Returns an enum value indicating which AVX instruction
+		 * set is used for mixing received voice data, if any
+		 * 
+		 * @return avx_type_t AVX type
+		 */
+		avx_type_t DPP_EXPORT voice_avx();
+
+		/**
 		 * @brief Returns true if D++ was built with coroutine support
 		 * 
 		 * @return bool True if coroutines are supported 
@@ -413,8 +448,8 @@ namespace dpp {
 
 		/**
 		 * @brief Read a whole file into a std::string.
-		 * Be sure you have enough memory to read the file, if you are reading a large file.
-		 * @note Be aware this function can block! If you are regularly reading large files, consider caching them.
+		 * @note This function can take a while if this is a large file, causing events to not reply and also taking up a lot of memory. Make sure you have enough memory, and use dpp::interaction_create_t::thinking in events where you call this function on big files.
+		 * @warning Be aware this function can block! If you are regularly reading large files, consider caching them.
 		 * @param filename The path to the file to read
 		 * @return std::string The file contents
 		 * @throw dpp::file_exception on failure to read the entire file
@@ -530,6 +565,40 @@ namespace dpp {
 		* @return std::string The formatted mention of the role.
 		*/
 		std::string DPP_EXPORT role_mention(const snowflake& id);
+
+		/**
+		* @brief Create a URL for message.
+		* @param guild_id The ID of the guild where message is written.
+		* @param channel_id The ID of the channel where message is written.
+		* @param message_id The ID of the message.
+		* @return std::string The URL to message or empty string if any of ids is 0.
+		*/
+		std::string DPP_EXPORT message_url(const snowflake& guild_id, const snowflake& channel_id, const snowflake& message_id);
+
+		/**
+		* @brief Create a URL for message.
+		* @param guild_id The ID of the guild where channel is located.
+		* @param channel_id The ID of the channel.
+		* @return std::string The URL to message or empty string if any of ids is 0.
+		*/
+		std::string DPP_EXPORT channel_url(const snowflake& guild_id, const snowflake& channel_id);
+
+		/**
+		* @brief Create a URL for message.
+		* @param guild_id The ID of the guild where thread is located.
+		* @param thread_id The ID of the thread.
+		* @return std::string The URL to message or empty string if any of ids is 0.
+		*/
+		std::string DPP_EXPORT thread_url(const snowflake& guild_id, const snowflake& thread_id);
+		
+		/**
+		* @brief Create a URL for message.
+		* @param user_id The ID of the guild where thread is located.
+		* @return std::string The URL to message or empty string if id is 0.
+		*/
+		std::string DPP_EXPORT user_url(const snowflake& user_id);
+
+
 
 #ifdef _DOXYGEN_
 		/**

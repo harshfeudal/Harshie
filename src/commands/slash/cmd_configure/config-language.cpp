@@ -46,7 +46,7 @@ void config_language(dpp::cluster& client, const dpp::slashcommand_t& event)
     
     auto create_embed = dpp::embed()
 	    .set_title(findDetails["title"])
-	    .set_color(0xabf2d3)
+	    .set_color(0x38ff9b)
 	    .set_description(findDetails["description"])
 	    .set_timestamp(time(0));
 

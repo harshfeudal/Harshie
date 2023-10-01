@@ -1,17 +1,4 @@
 {
-    "CONFIG_LANGUAGE":
-    {
-        "en-us": 
-        {
-            "title": "Success!",
-            "description": "Language has been set to `English - United State`"
-        },
-        "ja-jp":
-        {
-            "title": "成功!",
-            "description": "言語は `日本語` に設定されています"
-        }
-    },
     "PING":
     {
         "en-us": 
@@ -22,9 +9,43 @@
         },
         "ja-jp": 
         {
-            "title": "レイテンシの結果",
-            "websocket": "平均 Websocket Ping",
+            "title": "遅延結果",
+            "websocket": "平均ウェブソケットピン",
             "roundtrip": "往復遅延"
+        }
+    },
+    "CONFIG_LANGUAGE":
+    {
+        "en-us": 
+        {
+            "title": "Success!",
+            "description": "Language has been set to `English - United State`"
+        },
+        "ja-jp":
+        {
+            "title": "成功！",
+            "description": "言語が `日本語` に設定されました。"
+        }
+    },
+    "BAN":
+    {
+        "en-us": 
+        {
+            "ban": "ban"
+        }
+    },
+    "VALIDATION":
+    {
+        "en-us": 
+        {
+            "self-permission": "You have no permission to {} members",
+            "client-permission": "I have no permission to {} members",
+            "owner-restriction": "Owner is immune!",
+            "action-failed": "Action failed!",
+            "client-immuned": "I am immuned with myself",
+            "client-no-admin": "I have no administration permision to {} that user",
+            "user-no-admin": "You cannot {} a user that has administration permission",
+            "cannot-ban": "Cannot {} `{}` because their role is higher"
         }
     }
 }
