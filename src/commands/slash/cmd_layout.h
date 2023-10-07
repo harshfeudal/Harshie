@@ -41,9 +41,15 @@ inline std::map<std::string, HarshieCmndConstructor> commands
             "Set your prefer language when interacting with the bot", config_language,
             {
                 dpp::command_option(dpp::co_string, "language", "Your prefer language", true)
-                    .add_choice(dpp::command_option_choice("English", std::string("english")))
-                    .add_choice(dpp::command_option_choice("日本語", std::string("japanese")))
+                    .add_choice(dpp::command_option_choice("English", std::string("en-us")))
+                    .add_choice(dpp::command_option_choice("日本語", std::string("ja-jp")))
             }
+        }
+    },
+    {
+        "config-server",
+        {
+            "Select your server preference", config_server
         }
     },
 

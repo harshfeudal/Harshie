@@ -15,11 +15,9 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 
-// This file will be soon constructed!
+#include "../../harshie.h"
 
-#include "../cmd_lists.h"
-
-void config_server(dpp::cluster& client, const dpp::slashcommand_t& event)
+void Harshie::HarshieLanguagesValue(const dpp::select_click_t& event)
 {
     std::string setLanguage = "en-us";
 
@@ -32,36 +30,45 @@ void config_server(dpp::cluster& client, const dpp::slashcommand_t& event)
     if (searchServer)
         setLanguage = database.exportData("server_language", "server_config", "id=" + recordServerID);
 
-    auto findDetails = languagesJSON["CONFIG_SERVER"][setLanguage];
+    auto findDetails = languagesJSON["CONFIG_SERVER"][setLanguage]["select-menu"]["languages"];
 
     auto create_embed = dpp::embed()
-	    .set_title(findDetails["title"])
-	    .set_color(0xabf2d3)
-	    .set_timestamp(time(0))
-        .add_field(findDetails["name-langs"], findDetails["description-langs"]);
+        .set_title(findDetails["title"])
+        .set_description(findDetails["description"])
+        .set_color(0xabf2d3)
+        .set_timestamp(time(0));
 
     event.reply(
         dpp::message().add_embed(create_embed).add_component(
             dpp::component().add_component(
                 dpp::component()
-                    .set_type(dpp::cot_selectmenu)
-                    .set_placeholder("Server Configuration")
-                    .add_select_option(
-                        dpp::select_option(
-                            "Server Languages", 
-                            "languages", 
-                            "Select server language for the bot when sending."
-                        )
+                .set_type(dpp::cot_selectmenu)
+                .set_placeholder("Choose language")
+                .add_select_option(
+                    dpp::select_option(
+                        "English",
+                        "en-us"
                     )
-                    .add_select_option(
-                        dpp::select_option(
-                            "Moderation", 
-                            "moderation", 
-                            "Moderation configuration."
-                        )
+                )
+                .add_select_option(
+                    dpp::select_option(
+                        "Japanese",
+                        "ja-jp"
                     )
-                    .set_id("server_config")
+                )
+                .set_id("server_language")
             )
-        )
+        ).set_flags(dpp::m_ephemeral)
     );
+}
+
+void Harshie::HarshieLanguageSelection(const dpp::select_click_t& event)
+{
+    selectLanguage = event.values[0];
+    HarshieDatabase& database = HarshieDatabase::getInstance();
+
+    auto recordServerID = fmt::format("'{}'", event.command.guild_id);
+    auto searchServer = database.findRecord("server_config", "id=" + recordServerID);
+
+    std::string setLanguage = languageManager("server_config", selectLanguage, searchServer, recordServerID, database);
 }

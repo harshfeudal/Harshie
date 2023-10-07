@@ -29,3 +29,16 @@ void HarshieCreateDatabase::languageData()
         fmt::print("[{}] Failed to create language_config table\n", dpp::utility::current_date_time());
     }
 }
+
+void HarshieCreateDatabase::serverData()
+{
+    try
+    {
+        database.createTable("server_config", "id TEXT, server_language TEXT");
+        fmt::print("[{}] server_config table created!\n", dpp::utility::current_date_time());
+    }
+    catch(...)
+    {
+        fmt::print("[{}] Failed to create server_config table\n", dpp::utility::current_date_time());
+    }
+}

@@ -33,14 +33,17 @@ project(
 )
 
 aux_source_directory(src MAINSRC)
-aux_source_directory(src/cores CORES)
 aux_source_directory(src/database DATABASE)
+aux_source_directory(src/templates TEMPLATE)
+
+aux_source_directory(src/cores CORES)
+aux_source_directory(src/cores/select_menus SELECT_MENUS)
+aux_source_directory(src/cores/select_menus/values VALUES)
 
 aux_source_directory(src/commands COMMANDS)
 aux_source_directory(src/commands/slash/cmd_common COMMON_CMDS)
 aux_source_directory(src/commands/slash/cmd_moderation MODERATION_CMDS)
 aux_source_directory(src/commands/slash/cmd_configure CONFIG_CMDS)
-aux_source_directory(src/commands/slash/cmd_utils UTILS_CMDS)
 
 add_executable(${PROJECT_NAME} 
     ${MAINSRC} 
@@ -48,9 +51,11 @@ add_executable(${PROJECT_NAME}
         ${COMMON_CMDS} 
         ${MODERATION_CMDS} 
         ${CONFIG_CMDS} 
-        ${UTILS_CMDS} 
     ${CORES} 
+        ${SELECT_MENUS} 
+            ${VALUES} 
     ${DATABASE} 
+    ${TEMPLATE}
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

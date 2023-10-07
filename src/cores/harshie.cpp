@@ -35,6 +35,7 @@ void Harshie::HarshieStart()
 
     HarshieOnReady();
     HarshieOnSlashCmnd();
+    HarshieOnSelectClicked();
     
     HarshieOnDatabaseConnect();
     HarshieOnDatabaseCreate();
@@ -110,5 +111,19 @@ void Harshie::HarshieOnDatabaseConnect()
 void Harshie::HarshieOnDatabaseCreate()
 {
     HarshieCreateDatabase createDatabase;
+
     createDatabase.languageData();
+    createDatabase.serverData();
+}
+
+void Harshie::HarshieOnSelectClicked()
+{
+    client->on_select_click([this](const dpp::select_click_t& event)
+        {
+            selectMenuValue = event.custom_id;
+            HarshieServerConfig(event);
+
+            if (event.custom_id == "server_language")
+                HarshieLanguageSelection(event);
+        });
 }

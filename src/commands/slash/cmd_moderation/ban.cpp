@@ -26,10 +26,10 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
     const auto guildID = event.command.guild_id;
 
 	const auto getGuild = dpp::find_guild(guildID);
-	const auto tgt_user = getGuild->members.find(userID);
+	const auto getUser = getGuild->members.find(userID);
 
 	HarshieDatabase& database = HarshieDatabase::getInstance();
-    std::string selectLanguage = database.getSelectLanguage(event.command.usr.id);
+    std::string selectLanguage = database.getSelectLanguage(event.command.usr.id, "language_config", "language");
 
     json& languagesJSON = HarshieLanguages::getInstance().getLanguagesJSON();
     auto findDetails = languagesJSON["BAN"][selectLanguage];
@@ -58,7 +58,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 			client.set_audit_reason(reason);
 			client.guild_ban_add(guildID, userID);
 
-			if (tgt_user == getGuild->members.end()) {}
+			if (getUser == getGuild->members.end()) {}
 		}
 	}
 }

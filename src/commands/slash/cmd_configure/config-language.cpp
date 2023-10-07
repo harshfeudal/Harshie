@@ -25,21 +25,7 @@ void config_language(dpp::cluster& client, const dpp::slashcommand_t& event)
     auto recordUserID = fmt::format("'{}'", event.command.usr.id);
     auto searchUser = database.findRecord("language_config", "id=" + recordUserID);
 
-    std::string setLanguage = "en-us";
-
-    if (selectLanguage == "english")
-    {
-        if (searchUser)
-            database.deleteData("language_config", "id=" + recordUserID);
-    }
-    else if (selectLanguage == "japanese")
-    {
-        if (searchUser)
-            database.deleteData("language_config", "id=" + recordUserID);
-
-        setLanguage = "ja-jp";
-        database.insertData("language_config", recordUserID + ", '" + setLanguage + "'");
-    }
+    std::string setLanguage = languageManager("language_config", selectLanguage, searchUser, recordUserID, database);
 
     json& languagesJSON = HarshieLanguages::getInstance().getLanguagesJSON();
     auto findDetails = languagesJSON["CONFIG_LANGUAGE"][setLanguage];

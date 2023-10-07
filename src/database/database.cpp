@@ -45,6 +45,7 @@ HarshieDatabase::~HarshieDatabase()
     PQfinish(connection);
 }
 
+// "CREATE TABLE IF NOT EXISTS " + tableName + " (" + columns + ");"
 bool HarshieDatabase::createTable(const std::string& tableName, const std::string& columns)
 {
     std::string query = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + columns + ");";
@@ -60,6 +61,7 @@ bool HarshieDatabase::createTable(const std::string& tableName, const std::strin
     return true;
 }
 
+// "INSERT INTO " + tableName + " VALUES (" + values + ");"
 bool HarshieDatabase::insertData(const std::string& tableName, const std::string& values)
 {
     std::string query = "INSERT INTO " + tableName + " VALUES (" + values + ");";
@@ -75,6 +77,7 @@ bool HarshieDatabase::insertData(const std::string& tableName, const std::string
     return true;
 }
 
+// "DELETE FROM " + tableName + " WHERE " + condition + ";"
 bool HarshieDatabase::deleteData(const std::string& tableName, const std::string& condition)
 {
     std::string query = "DELETE FROM " + tableName + " WHERE " + condition + ";";
@@ -90,6 +93,7 @@ bool HarshieDatabase::deleteData(const std::string& tableName, const std::string
     return true;
 }
 
+// "SELECT * FROM " + tableName + " WHERE " + searchCondition + ";"
 bool HarshieDatabase::findRecord(const std::string& tableName, const std::string& searchCondition)
 {
     std::string query = "SELECT * FROM " + tableName + " WHERE " + searchCondition + ";";
@@ -110,6 +114,7 @@ bool HarshieDatabase::findRecord(const std::string& tableName, const std::string
         return false;
 }
 
+// "SELECT " + targetColumn + " FROM " + tableName + " WHERE " + searchCondition + ";"
 std::string HarshieDatabase::exportData(const std::string& targetColumn, const std::string& tableName, const std::string& searchCondition)
 {
     std::string query = "SELECT " + targetColumn + " FROM " + tableName + " WHERE " + searchCondition + ";";
@@ -134,14 +139,14 @@ HarshieDatabase& HarshieDatabase::getInstance()
     return instance;
 }
 
-std::string HarshieDatabase::getSelectLanguage(const dpp::snowflake& userId)
+std::string HarshieDatabase::getSelectLanguage(const dpp::snowflake& id, std::string tableName, std::string exportColumn)
 {
-    auto recordUserID = fmt::format("'{}'", userId);
-        auto searchUser = findRecord("language_config", "id=" + recordUserID);
+    auto recordID = fmt::format("'{}'", id);
+        auto searchUser = findRecord(tableName, "id=" + recordID);
 
         std::string selectLanguage = "en-us";
         if (searchUser)
-            selectLanguage = exportData("language", "language_config", "id=" + recordUserID);
+            selectLanguage = exportData(exportColumn, tableName, "id=" + recordID);
 
         return selectLanguage;
 }

@@ -10,8 +10,14 @@
         "ja-jp": 
         {
             "title": "遅延結果",
-            "websocket": "平均ウェブソケットピン",
-            "roundtrip": "往復遅延"
+            "websocket": "平均 WebSocket ピング",
+            "roundtrip": "ラウンドトリップ遅延"
+        },
+        "zn-cn":
+        {
+            "title": "延迟结果",
+            "websocket": "平均 WebSocket 延迟",
+            "roundtrip": "往返延迟"
         }
     },
     "CONFIG_LANGUAGE":
@@ -19,12 +25,53 @@
         "en-us": 
         {
             "title": "Success!",
-            "description": "Language has been set to `English - United State`"
+            "description": "Language has been set to `English - United State`."
         },
         "ja-jp":
         {
-            "title": "成功！",
+            "title": "成功しました！",
             "description": "言語が `日本語` に設定されました。"
+        }
+    },
+    "CONFIG_SERVER":
+    {
+        "en-us": 
+        {
+            "title": "Server Configuration",
+            "name-langs": "Server Language",
+            "description-langs": "Select server language for the bot when sending.",
+            "select-menu":
+            {
+                "languages":
+                {
+                    "title": "Select language",
+                    "description": "Please select your server prefer language to let the bot send.",
+                    "language-menu":
+                    {
+                        "title": "Success!",
+                        "description": "Server language has been set to `English - United State`."
+                    }
+                }
+            }
+        },
+        "ja-jp": 
+        {
+            "title": "サーバー設定",
+            "name-langs": "サーバー言語",
+            "description-langs": "送信時のボットのサーバー言語を選択してください。",
+            "select-menu":
+            {
+                "languages":
+                {
+                    "title": "言語を選択してください。",
+                    "description": "ボットが送信するためのサーバーの優先言語を選択してください。",
+                    "language-menu":
+                    {
+                        "title": "成功しました！",
+                        "description": "サーバーの言語が日本語に設定されました。"
+                    }
+                }
+            }
         }
     },
     "BAN":
@@ -38,14 +85,14 @@
     {
         "en-us": 
         {
-            "self-permission": "You have no permission to {} members",
-            "client-permission": "I have no permission to {} members",
+            "self-permission": "You have no permission to {} members.",
+            "client-permission": "I have no permission to {} members.",
             "owner-restriction": "Owner is immune!",
             "action-failed": "Action failed!",
-            "client-immuned": "I am immuned with myself",
-            "client-no-admin": "I have no administration permision to {} that user",
-            "user-no-admin": "You cannot {} a user that has administration permission",
-            "cannot-ban": "Cannot {} `{}` because their role is higher"
+            "client-immuned": "I am immuned with myself.",
+            "client-no-admin": "I have no administration permision to {} that user.",
+            "user-no-admin": "You cannot {} a user that has administration permission.",
+            "cannot-ban": "Cannot {} `{}` because their role is higher."
         }
     }
 }

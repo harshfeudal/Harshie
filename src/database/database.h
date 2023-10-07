@@ -45,5 +45,5 @@ public:
     HarshieDatabase& operator=(const HarshieDatabase&) = delete;
     HarshieDatabase& operator=(HarshieDatabase&&) = delete;
 
-    std::string getSelectLanguage(const dpp::snowflake& userId);
+    std::string getSelectLanguage(const dpp::snowflake& id, std::string tableName, std::string exportColumn);
 };

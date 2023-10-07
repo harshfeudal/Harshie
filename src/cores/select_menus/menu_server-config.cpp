@@ -15,19 +15,10 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 
-#pragma once
+#include "../harshie.h"
 
-#include <dpp/dpp.h>
-#include <spdlog/spdlog.h>
-
-#include "database.h"
-
-class HarshieCreateDatabase
+void Harshie::HarshieServerConfig(const dpp::select_click_t& event)
 {
-public:
-    void languageData();
-    void serverData();
-
-private:
-    HarshieDatabase& database = HarshieDatabase::getInstance();
-};
+    if (event.values[0] == "languages")
+        HarshieLanguagesValue(event);
+}

@@ -18,16 +18,7 @@
 #pragma once
 
 #include <dpp/dpp.h>
-#include <spdlog/spdlog.h>
 
-#include "database.h"
+#include "../../database/database.h"
 
-class HarshieCreateDatabase
-{
-public:
-    void languageData();
-    void serverData();
-
-private:
-    HarshieDatabase& database = HarshieDatabase::getInstance();
-};
+std::string languageManager(std::string tableName, std::string selectLanguage, bool searchAvailable, std::string recordID, HarshieDatabase& database);

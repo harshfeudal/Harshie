@@ -36,7 +36,7 @@ inline std::tuple<bool, std::string> cmndValidation(dpp::cluster& client, const 
     const auto isAdminClient = event.command.app_permissions.has(dpp::p_administrator);
 
     HarshieDatabase& database = HarshieDatabase::getInstance();
-    std::string selectLanguage = database.getSelectLanguage(event.command.usr.id);
+    std::string selectLanguage = database.getSelectLanguage(event.command.usr.id, "language_config", "language");
 
     json& languagesJSON = HarshieLanguages::getInstance().getLanguagesJSON();
     auto findDetails = languagesJSON["VALIDATION"][selectLanguage];

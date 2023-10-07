@@ -25,12 +25,14 @@
 
 #include "../../database/database.h"
 #include "../../cores/languages.h"
+#include "../../cores/select_menus/process_template.h"
 
 // Common commands
 void ping(dpp::cluster& client, const dpp::slashcommand_t& event);
 
 // Configure commands
 void config_language(dpp::cluster& client, const dpp::slashcommand_t& event);
+void config_server(dpp::cluster& client, const dpp::slashcommand_t& event);
 
 // Moderation commands
 void ban(dpp::cluster& client, const dpp::slashcommand_t& event);

@@ -29,7 +29,9 @@
 
 #include "dotenv.h"
 #include "decoder.h"
+#include "languages.h"
 #include "../database/database.h"
+#include "select_menus/process_template.h"
 
 class Harshie 
 {
@@ -40,13 +42,22 @@ public:
 
 private:
     HarshieDotenv dotenv;
+
     std::unique_ptr<dpp::cluster> client;
+    std::string selectLanguage;
+    std::string selectMenuValue;
 
     void HarshieOnReady();
     void HarshieOnSlashCmnd();
     void HarshieOnDatabaseConnect();
     void HarshieOnDatabaseCreate();
+    void HarshieOnSelectClicked();
 
     void HarshieActivites(const dpp::ready_t& event);
     void HarshieRegisterSlashCmnd();
+
+    void HarshieServerConfig(const dpp::select_click_t& event);
+
+    void HarshieLanguagesValue(const dpp::select_click_t& event);
+    void HarshieLanguageSelection(const dpp::select_click_t& event);
 };
