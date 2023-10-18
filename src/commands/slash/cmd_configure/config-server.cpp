@@ -35,33 +35,33 @@ void config_server(dpp::cluster& client, const dpp::slashcommand_t& event)
     auto findDetails = languagesJSON["CONFIG_SERVER"][setLanguage];
 
     auto create_embed = dpp::embed()
-	    .set_title(findDetails["title"])
-	    .set_color(0xabf2d3)
-	    .set_timestamp(time(0))
+        .set_title(findDetails["title"])
+        .set_color(0xabf2d3)
+        .set_timestamp(time(0))
         .add_field(findDetails["name-langs"], findDetails["description-langs"]);
 
-    event.reply(
-        dpp::message().add_embed(create_embed).add_component(
-            dpp::component().add_component(
-                dpp::component()
-                    .set_type(dpp::cot_selectmenu)
-                    .set_placeholder("Server Configuration")
-                    .add_select_option(
-                        dpp::select_option(
-                            "Server Languages", 
-                            "languages", 
-                            "Select server language for the bot when sending."
-                        )
-                    )
-                    .add_select_option(
-                        dpp::select_option(
-                            "Moderation", 
-                            "moderation", 
-                            "Moderation configuration."
-                        )
-                    )
-                    .set_id("server_config")
+    auto serverConfigSelection = dpp::component().add_component(
+        dpp::component()
+        .set_type(dpp::cot_selectmenu)
+        .set_placeholder("Server Configuration")
+        .add_select_option(
+            dpp::select_option(
+                "Server Languages",
+                "languages",
+                "Select server language for the bot when sending."
             )
         )
+        .add_select_option(
+            dpp::select_option(
+                "Moderation",
+                "moderation",
+                "Moderation configuration."
+            )
+        )
+        .set_id("server_config")
+    );
+
+    event.reply(
+        dpp::message().add_embed(create_embed).add_component(serverConfigSelection)
     );
 }

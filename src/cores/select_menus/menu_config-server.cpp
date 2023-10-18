@@ -17,7 +17,7 @@
 
 #include "../harshie.h"
 
-void Harshie::HarshieServerConfig(const dpp::select_click_t& event)
+void Harshie::HarshieConfigServer(const dpp::select_click_t& event)
 {
     if (event.values[0] == "languages")
         HarshieLanguagesValue(event);

@@ -17,8 +17,8 @@
 
 #include "harshie.h"
 
-#include "../commands/slash/cmd_register.h"
 #include "../database/db_create.h"
+#include "../commands/slash/cmd_register.h"
 
 Harshie::Harshie()
 {
@@ -121,7 +121,7 @@ void Harshie::HarshieOnSelectClicked()
     client->on_select_click([this](const dpp::select_click_t& event)
         {
             selectMenuValue = event.custom_id;
-            HarshieServerConfig(event);
+            HarshieConfigServer(event);
 
             if (event.custom_id == "server_language")
                 HarshieLanguageSelection(event);

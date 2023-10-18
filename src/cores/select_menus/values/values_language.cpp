@@ -44,18 +44,8 @@ void Harshie::HarshieLanguagesValue(const dpp::select_click_t& event)
                 dpp::component()
                 .set_type(dpp::cot_selectmenu)
                 .set_placeholder("Choose language")
-                .add_select_option(
-                    dpp::select_option(
-                        "English",
-                        "en-us"
-                    )
-                )
-                .add_select_option(
-                    dpp::select_option(
-                        "Japanese",
-                        "ja-jp"
-                    )
-                )
+                .add_select_option(dpp::select_option("English", "en-us"))
+                .add_select_option(dpp::select_option("Japanese", "ja-jp"))
                 .set_id("server_language")
             )
         ).set_flags(dpp::m_ephemeral)
@@ -71,4 +61,17 @@ void Harshie::HarshieLanguageSelection(const dpp::select_click_t& event)
     auto searchServer = database.findRecord("server_config", "id=" + recordServerID);
 
     std::string setLanguage = languageManager("server_config", selectLanguage, searchServer, recordServerID, database);
+
+    json& languagesJSON = HarshieLanguages::getInstance().getLanguagesJSON();
+    auto findDetails = languagesJSON["CONFIG_SERVER"][setLanguage]["select-menu"]["languages"]["language-menu"];
+
+    auto create_embed = dpp::embed()
+	    .set_title(findDetails["title"])
+	    .set_color(0x38ff9b)
+	    .set_description(findDetails["description"])
+	    .set_timestamp(time(0));
+
+    event.reply(
+        dpp::message().add_embed(create_embed).set_flags(dpp::m_ephemeral)
+    );
 }

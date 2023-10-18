@@ -1,10 +1,10 @@
 {
-    "PING":
+    "PING": 
     {
         "en-us": 
         {
             "title": "Latency result",
-            "websocket": "Average Websocket Ping",
+            "websocket": "Average WebSocket Ping",
             "roundtrip": "Roundtrip latency"
         },
         "ja-jp": 
@@ -13,43 +13,48 @@
             "websocket": "平均 WebSocket ピング",
             "roundtrip": "ラウンドトリップ遅延"
         },
-        "zn-cn":
+        "zn-cn": 
         {
             "title": "延迟结果",
             "websocket": "平均 WebSocket 延迟",
             "roundtrip": "往返延迟"
         }
     },
-    "CONFIG_LANGUAGE":
+    "CONFIG_LANGUAGE": 
     {
         "en-us": 
         {
             "title": "Success!",
-            "description": "Language has been set to `English - United State`."
+            "description": "Language has been set to `English - United States`."
         },
-        "ja-jp":
+        "ja-jp": 
         {
             "title": "成功しました！",
             "description": "言語が `日本語` に設定されました。"
+        },
+        "zn-cn": 
+        {
+            "title": "成功！",
+            "description": "语言已设置为 `简体中文`。"
         }
     },
-    "CONFIG_SERVER":
+    "CONFIG_SERVER": 
     {
         "en-us": 
         {
             "title": "Server Configuration",
             "name-langs": "Server Language",
             "description-langs": "Select server language for the bot when sending.",
-            "select-menu":
+            "select-menu": 
             {
-                "languages":
+                "languages": 
                 {
                     "title": "Select language",
-                    "description": "Please select your server prefer language to let the bot send.",
-                    "language-menu":
+                    "description": "Please select your server's preferred language to let the bot send.",
+                    "language-menu": 
                     {
                         "title": "Success!",
-                        "description": "Server language has been set to `English - United State`."
+                        "description": "Server language has been set to `English - United States`."
                     }
                 }
             }
@@ -59,29 +64,63 @@
             "title": "サーバー設定",
             "name-langs": "サーバー言語",
             "description-langs": "送信時のボットのサーバー言語を選択してください。",
-            "select-menu":
+            "select-menu": 
             {
-                "languages":
+                "languages": 
                 {
                     "title": "言語を選択してください。",
                     "description": "ボットが送信するためのサーバーの優先言語を選択してください。",
-                    "language-menu":
+                    "language-menu": 
                     {
-                        "title": "成功しました！",
+                        "title": "Success!",
                         "description": "サーバーの言語が日本語に設定されました。"
+                    }
+                }
+            }
+        },
+        "zn-cn": 
+        {
+            "title": "服务器配置",
+            "name-langs": "服务器语言",
+            "description-langs": "发送时选择机器人的服务器语言。",
+            "select-menu": 
+            {
+                "languages": 
+                {
+                    "title": "选择语言",
+                    "description": "请选择您服务器的首选语言，以便让机器人发送。",
+                    "language-menu": 
+                    {
+                        "title": "成功！",
+                        "description": "服务器语言已设置为 `简体中文`。"
                     }
                 }
             }
         }
     },
-    "BAN":
+    "BAN": 
     {
         "en-us": 
         {
-            "ban": "ban"
+            "server-language": 
+            {
+                "ban": "Ban",
+                "no-reason": "No reason provided",
+                "is-banned-before": "User `{}` has been banned before",
+                "not-in-server": "Cannot find `{}` in this server, but has been banned anyway.",
+                "description": "User `{}` has been banned!"
+            }
+        },
+        "zn-cn": 
+        {
+            "server-language": 
+            {
+                "ban": "封禁",
+                "no-reason": "未提供理由"
+            }
         }
     },
-    "VALIDATION":
+    "VALIDATION": 
     {
         "en-us": 
         {
@@ -89,10 +128,40 @@
             "client-permission": "I have no permission to {} members.",
             "owner-restriction": "Owner is immune!",
             "action-failed": "Action failed!",
-            "client-immuned": "I am immuned with myself.",
-            "client-no-admin": "I have no administration permision to {} that user.",
+            "client-immuned": "I am immune to myself.",
+            "client-no-admin": "I have no administration permission to {} that user.",
             "user-no-admin": "You cannot {} a user that has administration permission.",
             "cannot-ban": "Cannot {} `{}` because their role is higher."
+        },
+        "ja-jp": 
+        {
+            "self-permission": "メンバーを{}する権限がありません。",
+            "client-permission": "私はメンバーを{}する権限がありません。",
+            "owner-restriction": "オーナーは免疫です！",
+            "action-failed": "アクションに失敗しました！",
+            "client-immuned": "私は自分自身に免疫があります。",
+            "client-no-admin": "そのユーザーに{}するための管理権限がありません。",
+            "user-no-admin": "管理権限を持つユーザーを{}することはできません。",
+            "cannot-ban": "役職が上位であるため、`{}`を{}できません。"
+        },
+        "zn-cn": 
+        {
+            "self-permission": "您没有权限{}成员。",
+            "client-permission": "我没有权限{}成员。",
+            "owner-restriction": "所有者免疫！",
+            "action-failed": "操作失败！",
+            "client-immuned": "我对自己免疫。",
+            "client-no-admin": "我没有{}该用户的管理权限。",
+            "user-no-admin": "您不能{}具有管理权限的用户。",
+            "cannot-ban": "无法{} `{}`，因为其角色较高。"
+        }
+    },
+    "DECORATION": 
+    {
+        "en-us":
+        {
+            "success": "Success!",
+            "error": "Error!"
         }
     }
 }

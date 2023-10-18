@@ -103,9 +103,7 @@ endif()
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
     COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_SOURCE_DIR}/.env $<TARGET_FILE_DIR:${PROJECT_NAME}>
-)
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
     COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_SOURCE_DIR}/languages.json $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )

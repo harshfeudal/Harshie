@@ -17,8 +17,7 @@
 
 #include "../cmd_lists.h"
 #include "../cmd_validation.h"
-
-// Under-construction!
+#include "../cmd_decoration.h"
 
 void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
@@ -28,20 +27,26 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 	const auto getGuild = dpp::find_guild(guildID);
 	const auto getUser = getGuild->members.find(userID);
 
+	std::string selectLanguage = "en-us";
 	HarshieDatabase& database = HarshieDatabase::getInstance();
-    std::string selectLanguage = database.getSelectLanguage(event.command.usr.id, "language_config", "language");
+
+	auto recordServerID = fmt::format("'{}'", event.command.guild_id);
+    auto searchServer = database.findRecord("server_config", "id=" + recordServerID);
+
+    if (searchServer)
+        selectLanguage = database.exportData("server_language", "server_config", "id=" + recordServerID);
 
     json& languagesJSON = HarshieLanguages::getInstance().getLanguagesJSON();
-    auto findDetails = languagesJSON["BAN"][selectLanguage];
+    auto findBanDetails = languagesJSON["BAN"][selectLanguage]["server-language"];
 
-	const auto isValidate = cmndValidation(client, event, userID, dpp::p_ban_members, findDetails["ban"]);
+	const auto isValidate = cmndValidation(client, event, userID, dpp::p_ban_members, findBanDetails["ban"]);
 
 	if (!std::get<bool>(isValidate))
 	{
 		const auto reasonParam = event.get_parameter("reason");
 		const auto reason = std::holds_alternative<std::string>(reasonParam)
 			? std::get<std::string>(reasonParam)
-			: "No reason provided";
+			: findBanDetails["no-reason"];
 
 		dpp::user user = client.user_get_sync(userID);
 		bool isBannedBefore = false;
@@ -50,6 +55,9 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 		{
 			client.guild_get_ban_sync(guildID, userID);
 			isBannedBefore = true;
+
+			std::string description = fmt::format(findBanDetails["is-banned-before"], user.format_username());
+			sendErrorEmbed(selectLanguage, description, event);
 		}
 		catch (...) {}
 
@@ -58,7 +66,12 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 			client.set_audit_reason(reason);
 			client.guild_ban_add(guildID, userID);
 
-			if (getUser == getGuild->members.end()) {}
+			std::string description = fmt::format(findBanDetails["description"], user.format_username());
+
+			if (getUser == getGuild->members.end())
+				description = fmt::format(findBanDetails["not-in-server"], user.format_username());
+
+			sendSucessfulEmbed(selectLanguage, description, event);
 		}
 	}
 }

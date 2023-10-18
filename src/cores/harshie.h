@@ -56,7 +56,7 @@ private:
     void HarshieActivites(const dpp::ready_t& event);
     void HarshieRegisterSlashCmnd();
 
-    void HarshieServerConfig(const dpp::select_click_t& event);
+    void HarshieConfigServer(const dpp::select_click_t& event);
 
     void HarshieLanguagesValue(const dpp::select_click_t& event);
     void HarshieLanguageSelection(const dpp::select_click_t& event);
